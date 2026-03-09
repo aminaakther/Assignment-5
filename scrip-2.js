@@ -10,7 +10,7 @@ const showLoader = () => loader.classList.remove("hidden");
 const hideLoader = () => loader.classList.add("hidden");
 
 
-// 🔎 SEARCH
+
 const fetchIssues = async (query) => {
 
     issueContainer.innerHTML = "";
