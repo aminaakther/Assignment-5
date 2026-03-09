@@ -175,7 +175,6 @@ btnClosed.addEventListener("click", () => {
 });
 
 
-
 // 📄 ISSUE DETAILS MODAL
 const showDetails = (issueId) => {
 
@@ -197,6 +196,19 @@ const showDetails = (issueId) => {
                 document.getElementById("modal-priority").innerText = issue.priority.toUpperCase();
                 document.getElementById("modal-meta").innerText =
                  `Created ${new Date(issue.createdAt).toLocaleDateString()}`;
+                 document.getElementById("modal-labels").innerHTML = issue.labels.map(label => {
+
+                    const lowerLabel = label.toLowerCase();
+
+                    return `<span class="badge 
+                 ${lowerLabel === "bug" ? "badge-error" : ""}
+                ${lowerLabel === "help wanted" ? "badge-warning" : ""}
+                ${lowerLabel === "enhancement" ? "badge-success" : ""}
+                ${lowerLabel === "documentation" ? "badge-info" : ""}
+                ${lowerLabel === "good first issue" ? "badge-warning" : ""}
+                mr-1 mb-2">${label.toUpperCase()}</span>`;
+
+                }).join("");
 
                 const statusEl = document.getElementById("modal-status");
 
@@ -212,16 +224,30 @@ const showDetails = (issueId) => {
 
 
 
-// 🚀 INIT
+
 loadIssues();
 toggleStyle("all-container");
 
 
 
+function toggleStyle(id) {
+    // 1. Prothome shob button-er list tairi korun
+    const buttons = ["all-container", "btn-open", "btn-closed"];
 
+    buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            // Shob button theke active color ba style remove korun
+            btn.classList.remove("btn-primary", "text-white", "bg-gray-300"); // Jekunu active class thakle remove hobe
+            btn.classList.add("btn-outline"); // Default outline style firye ana
+        }
+    });
 
-
-
-
-
+    // 2. Sudhu jetate click kora hoyeche, seta-te notun color add korun
+    const selected = document.getElementById(id);
+    if (selected) {
+        selected.classList.remove("btn-outline"); // Outline soriye fela
+        selected.classList.add("btn-primary", "text-white"); // DaisyUI primary color (blue-ish) add kora
+    }
+}
 
